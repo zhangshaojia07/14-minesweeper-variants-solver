@@ -1,0 +1,15 @@
+.venv/
+__pycache__/
+*.py[cod]
+
+# Local editor and machine-specific settings
+.claude/settings.local.json
+.vscode/
+
+# Captured board screenshots
+[0-9]*/
+
+# Python tooling
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/

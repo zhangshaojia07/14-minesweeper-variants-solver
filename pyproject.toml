@@ -1,0 +1,12 @@
+[project]
+name = "minesweeper"
+version = "0.1.0"
+requires-python = ">=3.12"
+dependencies = [
+    "gurobipy>=13.0.2",
+    "numpy>=2.4.6",
+    "ortools>=9.15.6755",
+    "pillow>=12.2.0",
+    "pyautogui>=0.9.54",
+    "rich>=15.0.0",
+]

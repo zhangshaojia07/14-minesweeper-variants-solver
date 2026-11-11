@@ -1,0 +1,57 @@
+# 14 Minesweeper Variants Solver
+
+A Python constraint-programming solver and Windows desktop helper for **14 Minesweeper Variants**. It models board rules and revealed clues, then reports cells that are guaranteed safe or mines. The main solver uses Google OR-Tools CP-SAT; a separate Gurobi-based implementation is also included.
+
+This is intended for solving the game's single-player puzzles, where using a solver is part of the fun. It is not intended to cheat in competitive play.
+
+## What is included
+
+- `sweeper/rules.py` — board-wide and clue-specific rule constraints.
+- `sweeper/main.py` — solver state, clue updates, and guaranteed-cell detection.
+- `minesweeper.py` — screen capture, tile recognition using the templates in `std/`, and mouse automation.
+- `minesweeper_gurobi.py` — an alternative screen helper and solver using Gurobi.
+- `std/` — reference tile images used for screen recognition.
+
+The solver encodes the rules available in this repository; it does not claim to implement every one of the game's 14 variants.
+
+## Requirements
+
+- Windows (the screen-reading and mouse-control scripts use desktop coordinates).
+- Python 3.12 or newer.
+- [uv](https://docs.astral.sh/uv/) for dependency management.
+- A running game window whose board layout matches the script's configured screen coordinates and tile size.
+- A working Gurobi installation and license to use `minesweeper_gurobi.py`.
+
+## Setup
+
+From the project directory:
+
+```powershell
+uv sync
+```
+
+The project dependencies include OR-Tools, PyAutoGUI, Pillow, NumPy, and Rich. The OR-Tools solver does not require a Gurobi license.
+
+## Running
+
+The main entry point is configured directly in `minesweeper.py`. Review and adjust its board size, mine count, variant, screen offsets, tile size, and next-round button coordinates for your game window before running:
+
+```powershell
+uv run python minesweeper.py
+```
+
+The helper reads the board from screenshots, matches tiles against `std/`, and clicks or flags cells that the solver can prove. Keep the game visible and ensure the configured coordinates match your display. The script can also save screenshots when `shot_mode` is enabled.
+
+The standalone solver can be run with:
+
+```powershell
+uv run python -m sweeper.main
+```
+
+It accepts revealed cells interactively as `row column clue`, using zero-based row and column indices. Enter `-1` as the clue for a known-safe cell with no clue value.
+
+## Notes
+
+- The screen helper uses fixed coordinates and is currently tailored to a particular board layout; it is not a general-purpose game integration.
+- `minesweeper_gurobi.py` uses Gurobi and may require a separately configured license.
+- No game files or proprietary game assets are included; the images in `std/` are local tile-recognition templates.
